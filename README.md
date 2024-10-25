@@ -1,5 +1,5 @@
-# RedLauncher - A minecraft launcher
-Note: Client is not supported, DM me on discord if you know how to get the client running: calcium8992
+# RedServer - A minecraft launcher
+Want to run a paper server?
 
 ### Running
 To run redlauncher, you need ruby installed. You can install it by:
