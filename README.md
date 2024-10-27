@@ -1,13 +1,19 @@
-# RedServer - A minecraft launcher
+# RedServer - A minecraft server manager
 Want to run a paper server?
 
-### Running
-To run redlauncher, you need ruby installed. You can install it by:
-#### Homebrew
-`brew install ruby`
+### Dependicies and Running
 
-##### APT
-`sudo apt-get install ruby`
+#### Dependicies:
+- Ruby
+
+##### Gem modules:
+// May come by default
+- FileUtils
+- JSON
+- Open-Uri
+
+// Need to install
+- Colorize
 
 And finally to run it:
 `ruby main.rb`
