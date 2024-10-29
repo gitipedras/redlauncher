@@ -116,7 +116,11 @@ def autoInstall()
   # Parse the JSON data
   default_options = JSON.parse(default_options)
 
-  merged_data = default_options.merge(autofile) { |key, b_val, a_val| a_val.nil? || a_val.empty? ? b_val : a_val }
+ 
+  # Merge autofile data with default options, checking if a_val is nil or empty (if it responds to empty?)
+  merged_data = default_options.merge(autofile) do |_, b_val, a_val|
+    a_val.nil? || (a_val.respond_to?(:empty?) && a_val.empty?) ? b_val : a_val
+  end
 
   # Process keys to replace symbols like "->" with underscores
   processed_data = merged_data.transform_keys { |key| key.to_s.gsub(/[^0-9a-z]/i, '_') }
