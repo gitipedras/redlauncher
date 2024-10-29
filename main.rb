@@ -4,6 +4,18 @@ require 'json'
 require_relative 'plugins'
 require_relative 'functions'
 
+@programver = "0.1.0"
+
+if File.exist?('installed.txt')
+  # pass
+
+else
+  downloadAssets()
+  exit
+end
+
+checkLatest()
+
 if File.exist?('options.txt')
   if ARGV.include?('--plugin')
     pluginManager()

@@ -1,10 +1,60 @@
 require 'colorize'
 require 'open-uri'
 require 'fileutils'
+require 'rubygems/version'
 
-def startup()
+def checkLatest()
 
-  FileUtils.mkdir_p "data/"
+puts 'Checking for latest version...'.colorize(:yellow)
+
+url = 'https://raw.githubusercontent.com/gitipedras/redserver/refs/heads/external-app-data/version.json'
+json_data = URI.open(url) { |f| f.read }
+data = JSON.parse(json_data)
+
+latest_version = data['latest']
+
+puts "Latest version is: #{latest_version}"
+
+local_version_data = JSON.parse(File.read('version.txt'))
+local_version = local_version_data['version']
+
+# Compare the versions
+if Gem::Version.new(latest_version) > Gem::Version.new(local_version)
+  puts "[Version Checker] Update Avalible!".colorize(:yellow)
+elsif Gem::Version.new(latest_version) < Gem::Version.new(local_version)
+  puts "[Version Checker] Hello, future person! :D"
+else
+  puts "[Version Checker] You are on the latest version!"
+end
+
+end
+
+def downloadAssets()
+  FileUtils.mkdir_p('data/')
+
+  url = "https://raw.githubusercontent.com/gitipedras/redserver/refs/heads/external-app-data/default-server-options.json"
+  uri = URI.parse(url)
+  
+  # Append the file name to the directory path
+  file_path = "data/default-server-options.json"
+  
+  puts 'Downloading assets...'.colorize(:yellow)
+  URI.open(file_path, 'wb') do |local_file|
+    local_file.write URI.open(uri).read
+  end
+
+  out_file = File.new("version.txt", "w")
+  out_file.puts("
+  {
+    \"version\": \"#{@programver}\"
+  }
+  ")
+
+  out_file.close
+
+  FileUtils.touch('installed.txt')
+
+  puts 'Restart redserver'.colorize(:yellow)
 
 end
 
@@ -27,7 +77,7 @@ def getServerDownload(path, serverVersion, autoi)
   file_path = File.join(path, file_name)
   
   puts 'Downloading server jar file...'.colorize(:yellow)
-  File.open(file_path, 'wb') do |local_file|
+  URI.open(file_path, 'wb') do |local_file|
     local_file.write URI.open(uri).read
   end
 
@@ -99,6 +149,15 @@ end
 
 
 def autoInstall()
+
+  if File.exist?('options.txt')
+    # ignore the rest of the code and exit
+    puts "You have already installed your server.".colorize(:red)
+    exit
+
+  else
+    # pass
+  end
 
   puts "Your server will be auto-installed from auto.json".colorize(:yellow) 
   
