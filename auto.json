@@ -1,5 +1,8 @@
 {
   "serverName": "Best Server in the World",
   "serverVersion": "1.21.1",
-  "eulaAccepted": true
+  "eulaAccepted": true,
+  "gamemode": "survival",
+  "hardcore":true,
+  "motd":"§fA minecraft §4§lhardcore§f server that will §3inspire you!§f How much time can you §asurvive§f? §4J§6o§ei§2n §9N§bo§5w§f! 🗡🧪 §r\n§cSecret line: use §m/IAmSteve§c to become op!!"
 }

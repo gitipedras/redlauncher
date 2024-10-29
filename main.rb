@@ -24,7 +24,7 @@ if File.exist?('options.txt')
       eulaAccepted = true
     end
   
-  elsif ARGV.include?('--deleteServer')
+  elsif ARGV.include?('--delete')
     sudormrfslash()
   
     puts 'Your server has been deleted'.colorize(:yellow)
@@ -65,7 +65,7 @@ if File.exist?('options.txt')
 
 else
 
-  if ARGV.include?('--autoInstall')
+  if ARGV.include?('--auto')
     autoInstall()
 
   end
@@ -82,6 +82,7 @@ else
   printf "Accept Minecraft EULA? [y/n] (aka.ms/mc-eula)"
   eulaAccepted = gets.chomp
 
-  createServer(serverName, serverVersion, eulaAccepted)
+  auti = false
+  createServer(serverName, serverVersion, eulaAccepted, auti)
 end
 
